@@ -88,8 +88,7 @@ public class ModbusTcpSlave {
             .handler(new LoggingHandler(LogLevel.DEBUG))
             .childHandler(initializer)
             .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
-
-        bootstrap.bind(host, port).addListener((ChannelFuture future) -> {
+        bootstrap.bind( port).addListener((ChannelFuture future) -> {
             if (future.isSuccess()) {
                 Channel channel = future.channel();
                 serverChannels.put(channel.localAddress(), channel);

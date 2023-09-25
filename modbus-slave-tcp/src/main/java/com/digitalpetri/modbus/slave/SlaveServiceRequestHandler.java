@@ -1,9 +1,11 @@
 package com.digitalpetri.modbus.slave;
 
 import com.digitalpetri.modbus.requests.ReadHoldingRegistersRequest;
+import com.digitalpetri.modbus.requests.ReadWriteMultipleRegistersRequest;
 import com.digitalpetri.modbus.requests.WriteMultipleRegistersRequest;
 import com.digitalpetri.modbus.requests.WriteSingleRegisterRequest;
 import com.digitalpetri.modbus.responses.ReadHoldingRegistersResponse;
+import com.digitalpetri.modbus.responses.ReadWriteMultipleRegistersResponse;
 import com.digitalpetri.modbus.responses.WriteMultipleRegistersResponse;
 import com.digitalpetri.modbus.responses.WriteSingleRegisterResponse;
 import io.netty.buffer.ByteBuf;
@@ -38,6 +40,15 @@ public class SlaveServiceRequestHandler implements ServiceRequestHandler {
         WriteSingleRegisterRequest request = service.getRequest();
         repository.writeSingleRegister(request.getAddress(), request.getValue());
         service.sendResponse(new WriteSingleRegisterResponse(request.getAddress(), request.getValue()));
+    }
+
+    @Override
+    public void onReadWriteMultipleRegisters(ServiceRequest<ReadWriteMultipleRegistersRequest, ReadWriteMultipleRegistersResponse> service) {
+        logClientInformation(service);
+        ReadWriteMultipleRegistersRequest request = service.getRequest();
+        repository.writeMultipleRegister(request.getWriteAddress(), request.getWriteQuantity(), request.getValues());
+        ByteBuf holdingRegisters = repository.readHoldingRegisters(request.getReadAddress(),request.getReadQuantity());
+        service.sendResponse(new ReadWriteMultipleRegistersResponse(holdingRegisters));
     }
 
     private void logClientInformation(ServiceRequest service){
