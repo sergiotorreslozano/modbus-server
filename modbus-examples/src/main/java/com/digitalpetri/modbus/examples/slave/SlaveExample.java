@@ -33,12 +33,14 @@ public class SlaveExample {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         final SlaveExample slaveExample = new SlaveExample();
+        System.out.println("Slave started");
 
         slaveExample.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread("modbus-slave-shutdown-hook") {
             @Override
             public void run() {
+                System.out.println("Stopping slave...");
                 slaveExample.stop();
             }
         });
@@ -54,27 +56,9 @@ public class SlaveExample {
     public SlaveExample() {}
 
     public void start() throws ExecutionException, InterruptedException {
-        slave.setRequestHandler(new ServiceRequestHandler() {
-            @Override
-            public void onReadHoldingRegisters(ServiceRequest<ReadHoldingRegistersRequest, ReadHoldingRegistersResponse> service) {
-                String clientRemoteAddress = service.getChannel().remoteAddress().toString();
-                String clientIp = clientRemoteAddress.replaceAll(".*/(.*):.*", "$1");
-                String clientPort = clientRemoteAddress.replaceAll(".*:(.*)", "$1");
-
-                ReadHoldingRegistersRequest request = service.getRequest();
-
-                ByteBuf registers = PooledByteBufAllocator.DEFAULT.buffer(request.getQuantity());
-
-                for (int i = 0; i < request.getQuantity(); i++) {
-                    registers.writeShort(i);
-                }
-
-                service.sendResponse(new ReadHoldingRegistersResponse(registers));
-
-                ReferenceCountUtil.release(request);
-            }
-        });
-
+        logger.debug("Slave started");
+        SlaveServiceRequestHandler serviceRequestHandler = new SlaveServiceRequestHandler();
+        slave.setRequestHandler(serviceRequestHandler);
         slave.bind("localhost", 50200).get();
     }
 
