@@ -18,29 +18,22 @@ package com.digitalpetri.modbus.examples.slave;
 
 import java.util.concurrent.ExecutionException;
 
-import com.digitalpetri.modbus.requests.ReadHoldingRegistersRequest;
-import com.digitalpetri.modbus.responses.ReadHoldingRegistersResponse;
 import com.digitalpetri.modbus.slave.ModbusTcpSlave;
 import com.digitalpetri.modbus.slave.ModbusTcpSlaveConfig;
-import com.digitalpetri.modbus.slave.ServiceRequestHandler;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.PooledByteBufAllocator;
-import io.netty.util.ReferenceCountUtil;
+import com.digitalpetri.modbus.slave.SlaveServiceRequestHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SlaveExample {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        final SlaveExample slaveExample = new SlaveExample();
-        System.out.println("Slave started");
 
+        final SlaveExample slaveExample = new SlaveExample();
         slaveExample.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread("modbus-slave-shutdown-hook") {
             @Override
             public void run() {
-                System.out.println("Stopping slave...");
                 slaveExample.stop();
             }
         });
@@ -56,7 +49,7 @@ public class SlaveExample {
     public SlaveExample() {}
 
     public void start() throws ExecutionException, InterruptedException {
-        logger.debug("Slave started");
+        logger.debug("Starting slave");
         SlaveServiceRequestHandler serviceRequestHandler = new SlaveServiceRequestHandler();
         slave.setRequestHandler(serviceRequestHandler);
         slave.bind("localhost", 50200).get();

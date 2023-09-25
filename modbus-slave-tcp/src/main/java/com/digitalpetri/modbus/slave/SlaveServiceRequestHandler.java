@@ -1,4 +1,4 @@
-package com.digitalpetri.modbus.examples.slave;
+package com.digitalpetri.modbus.slave;
 
 import com.digitalpetri.modbus.requests.ReadHoldingRegistersRequest;
 import com.digitalpetri.modbus.requests.WriteMultipleRegistersRequest;
@@ -6,10 +6,7 @@ import com.digitalpetri.modbus.requests.WriteSingleRegisterRequest;
 import com.digitalpetri.modbus.responses.ReadHoldingRegistersResponse;
 import com.digitalpetri.modbus.responses.WriteMultipleRegistersResponse;
 import com.digitalpetri.modbus.responses.WriteSingleRegisterResponse;
-import com.digitalpetri.modbus.slave.ServiceRequestHandler;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.PooledByteBufAllocator;
-import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -114,7 +114,7 @@ public class ModbusTcpSlave {
     private void onChannelRead(ChannelHandlerContext ctx, ModbusTcpPayload payload) {
         ServiceRequestHandler handler = requestHandler.get();
         if (handler == null) return;
-
+        logger.info("Request received: functionCode: {}", payload.getModbusPdu().getFunctionCode().toString());
         switch (payload.getModbusPdu().getFunctionCode()) {
             case ReadCoils:
                 handler.onReadCoils(ModbusTcpServiceRequest.of(payload, ctx.channel()));
