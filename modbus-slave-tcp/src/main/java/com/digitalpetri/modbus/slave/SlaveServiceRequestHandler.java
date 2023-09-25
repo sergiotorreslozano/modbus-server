@@ -44,7 +44,7 @@ public class SlaveServiceRequestHandler implements ServiceRequestHandler {
         String clientRemoteAddress = service.getChannel().remoteAddress().toString();
         String clientIp = clientRemoteAddress.replaceAll(".*/(.*):.*", "$1");
         String clientPort = clientRemoteAddress.replaceAll(".*:(.*)", "$1");
-        logger.debug("clientIp:{} clientPort:{}", clientIp, clientPort);
-        logger.debug("transactionId:{} unitId:{}" ,  service.getTransactionId(), service.getUnitId());
+        logger.info("clientIp:{} clientPort:{}", clientIp, clientPort);
+        logger.info("transactionId:{} unitId:{}" ,  service.getTransactionId(), service.getUnitId());
     }
 }

@@ -49,7 +49,7 @@ public class SlaveExample {
     public SlaveExample() {}
 
     public void start() throws ExecutionException, InterruptedException {
-        logger.debug("Starting slave");
+        logger.info("Starting slave");
         SlaveServiceRequestHandler serviceRequestHandler = new SlaveServiceRequestHandler();
         slave.setRequestHandler(serviceRequestHandler);
         slave.bind("localhost", 50200).get();

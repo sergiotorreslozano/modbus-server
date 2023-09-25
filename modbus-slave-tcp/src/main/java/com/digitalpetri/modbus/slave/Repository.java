@@ -14,9 +14,10 @@ public class Repository {
     private int[]  holdingRegister;
     
     public Repository(){
-        logger.info("Starting repository");
+        logger.info("Initializing repository");
         holdingRegister = new int[2000];
         Arrays.fill(holdingRegister, 0);
+        logger.info("Repository initialized");
     }
 
     public ByteBuf readHoldingRegisters(int address, int quantity){
