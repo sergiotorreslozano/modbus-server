@@ -20,4 +20,5 @@ release.properties
 *.iml
 ### MAC ###
 .DS_Store
+logs/
 
