@@ -27,7 +27,7 @@ public class MasterSlaveThroughput {
     public static final int N_REQUESTS = 100;
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        new SlaveExample().start();
+        new SlaveExample().start(50200);
         new MasterExample(N_MASTERS, N_REQUESTS).start();
     }
 

@@ -29,7 +29,12 @@ public class SlaveExample {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
         final SlaveExample slaveExample = new SlaveExample();
-        slaveExample.start();
+        int port = 50200;
+        if (args.length ==1 ){
+            System.out.printf("Setting port: " + args[0]);
+            port = Integer.parseInt(args[0]);
+        }
+        slaveExample.start(port);
 
         Runtime.getRuntime().addShutdownHook(new Thread("modbus-slave-shutdown-hook") {
             @Override
@@ -48,11 +53,11 @@ public class SlaveExample {
 
     public SlaveExample() {}
 
-    public void start() throws ExecutionException, InterruptedException {
+    public void start(int port) throws ExecutionException, InterruptedException {
         logger.info("Starting slave");
         SlaveServiceRequestHandler serviceRequestHandler = new SlaveServiceRequestHandler();
         slave.setRequestHandler(serviceRequestHandler);
-        slave.bind("localhost", 50200).get();
+        slave.bind("localhost", port).get();
     }
 
     public void stop() {
