@@ -5,7 +5,7 @@
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
-                %d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n
             </pattern>
         </encoder>
     </appender>
@@ -15,7 +15,7 @@
         <file>${LOGS}/app.log</file>
         <encoder
                 class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%t] %p %C %m%n</Pattern>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %p %C %m%n</Pattern>
         </encoder>
 
         <rollingPolicy
